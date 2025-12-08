@@ -3,7 +3,7 @@ import os
 import json
 import requests
 
-os.environ['BOT_TOKEN']
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
