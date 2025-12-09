@@ -19,6 +19,8 @@ class Handler(BaseHTTPRequestHandler):
         # 3. Формируем ответ
         if text == '/start':
             reply = "Привет! Я бот без сервера. Просто эхо."
+        elif text == '/about':
+            reply = "About."
         else:
             reply = f"Вы написали: {text}"
 
