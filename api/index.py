@@ -111,7 +111,7 @@ class Handler(BaseHTTPRequestHandler):
             return commands[text]
         
         # Для админов дополнительные команды
-        if chat_id in ADMIN_IDS and text == '/admin':
+        if str(chat_id) in ADMIN_IDS and text == '/admin':
             return "Панель администратора\n/users - список пользователей"
             
         # Любой другой текст
