@@ -38,4 +38,5 @@ STATUS_HTML = "status.html"
 
 # ===== КОНСТАНТЫ =====
 BOT_START_TIME = datetime.now()
+PROJECT_NAME = "tg_bot_webhook_03"
 VERSION = "0.1.0"
