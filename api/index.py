@@ -61,21 +61,21 @@ class Handler(BaseHTTPRequestHandler):
             post_data = self.rfile.read(content_length)
             update = json.loads(post_data)
             
-            # 2. Извлекаем сообщение и chat_id
-            chat_id = update['message']['chat']['id']
-            text = update['message'].get('text', '')
-            user = update['message'].get('from', '')
-            # # 2. Извлекаем сообщение
-            # message = update.get('message', {})
-            # if not message:
-            #     self.send_response(200)
-            #     self.end_headers()
-            #     return
+            # # 2. Извлекаем сообщение и chat_id
+            # chat_id = update['message']['chat']['id']
+            # text = update['message'].get('text', '')
+            # user = update['message'].get('from', '')
+            # 2. Извлекаем сообщение
+            message = update.get('message', {})
+            if not message:
+                self.send_response(200)
+                self.end_headers()
+                return
             
-            # chat = message.get('chat', {})
-            # chat_id = chat.get('id')
-            # text = message.get('text', '').strip()
-            # user = message.get('from', {})
+            chat = message.get('chat', {})
+            chat_id = chat.get('id')
+            text = message.get('text', '').strip()
+            user = message.get('from', {})
             
             # 3. Сохраняем пользователя (если есть база)
             if USE_DATABASE:
@@ -100,7 +100,7 @@ class Handler(BaseHTTPRequestHandler):
     def process_command(self, text, chat_id, user):
         """Обрабатывает текстовые команды"""
         commands = {
-            '/start': f"Привет, {user.get('first_name', 'друг')}! Я бот на Vercel. Команды: /help",
+            '/start': f"Привет, {user.get('first_name', 'друг')}! Я бот на Vercel. \nКоманды: /help",
             '/help': "Доступные команды:\n/start - Приветствие\n/help - Помощь\n/about - О боте\n/stats - Статистика",
             '/about': f"Бот: {PROJECT_NAME}\nВерсия: {VERSION}\nХостинг: Vercel",
             '/stats': self.get_stats_for_user(chat_id) if USE_DATABASE else "База данных не настроена",
