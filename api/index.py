@@ -54,23 +54,28 @@ class Handler(BaseHTTPRequestHandler):
     
     def do_POST(self):
         """Обработка POST-запросов от Telegram Webhook"""
+        print(f"Get webhook", datetime.now().isoformat() )
         try:
             # 1. Получаем данные от Telegram
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
             update = json.loads(post_data)
             
-            # 2. Извлекаем сообщение
-            message = update.get('message', {})
-            if not message:
-                self.send_response(200)
-                self.end_headers()
-                return
+            # 2. Извлекаем сообщение и chat_id
+            chat_id = update['message']['chat']['id']
+            text = update['message'].get('text', '')
+            user = update['message'].get('from', '')
+            # # 2. Извлекаем сообщение
+            # message = update.get('message', {})
+            # if not message:
+            #     self.send_response(200)
+            #     self.end_headers()
+            #     return
             
-            chat = message.get('chat', {})
-            chat_id = chat.get('id')
-            text = message.get('text', '').strip()
-            user = message.get('from', {})
+            # chat = message.get('chat', {})
+            # chat_id = chat.get('id')
+            # text = message.get('text', '').strip()
+            # user = message.get('from', {})
             
             # 3. Сохраняем пользователя (если есть база)
             if USE_DATABASE:
@@ -138,7 +143,7 @@ class Handler(BaseHTTPRequestHandler):
             'parse_mode': 'HTML'
         }
         try:
-            requests.post(url, json=payload, timeout=5)
+            requests.post(url, json=payload)
         except Exception as e:
             print(f"Ошибка отправки в Telegram: {e}")
 
