@@ -45,7 +45,8 @@ def read_html_template():
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         """Обработка GET-запросов - показываем статусную страницу"""
-        html_content = read_html_template()
+        html_content = html_status__bot_started # read_html_template()
+        
         
         self.send_response(200)
         self.send_header('Content-type', 'text/html; charset=utf-8')
