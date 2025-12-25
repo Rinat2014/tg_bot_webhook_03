@@ -116,7 +116,7 @@ class Handler(BaseHTTPRequestHandler):
             return "Панель администратора\n/users - список пользователей"
             
         # Любой другой текст
-        return f"Вы написали: {text}\nИспользуйте /help для списка команд"
+        return f"Вы написали: {text}\nИспользуйте \n/help для списка команд"
     
     def get_stats_for_user(self, chat_id):
         """Получает статистику пользователя"""
